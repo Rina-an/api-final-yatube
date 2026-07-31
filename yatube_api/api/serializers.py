@@ -32,6 +32,7 @@ class FollowSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', )
 
     def validate(self, data):
+        """Метод для проверки самоподписки и двойной подписки на юзера."""
         user = self.context['request'].user
         following = data['following']
         if user == following:
@@ -45,7 +46,6 @@ class FollowSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Вы уже подписаны на этого пользователя.'
             )
-
         return data
 
 
