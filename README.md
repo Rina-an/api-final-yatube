@@ -9,7 +9,7 @@
 1. `python3 -m venv venv` (Linux и macOS) или `python -m venv venv` (Windows)
 2. `source venv/bin/activate` (Linux и macOS) или `source venv/Scripts/activate` (Windows)
 3. `pip install -r requirements.txt`
-4. `python manage.py runserver`
+4.  Перейти в папку с файлом `manage.py ` и запустить  `python manage.py runserver`
 
 
 ## Примеры запросов и ответов API 
