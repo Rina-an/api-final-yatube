@@ -1,7 +1,8 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from posts.models import Comment, Group, Post, Follow
+from rest_framework import serializers
+
+from posts.models import Comment, Follow, Group, Post
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -29,19 +30,17 @@ class FollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follow
         fields = ('following', 'user')
-        read_only_fields = ('user', )
 
-    def validate(self, data):
+    def validate_following(self, data):
         """Метод для проверки самоподписки и двойной подписки на юзера."""
         user = self.context['request'].user
-        following = data['following']
-        if user == following:
+        if user == data:
             raise serializers.ValidationError(
                 'Нельзя подписаться на самого себя.'
             )
         if Follow.objects.filter(
             user=user,
-            following=following
+            following=data
         ).exists():
             raise serializers.ValidationError(
                 'Вы уже подписаны на этого пользователя.'

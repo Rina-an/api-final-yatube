@@ -22,8 +22,11 @@ router_v1.register(r'posts/(?P<post_id>\d+)/comments',
                    basename='comments'
                    )
 
+v1_urls = [
+    path('', include(router_v1.urls)),
+    path('', include('djoser.urls.jwt')),
+]
+
 urlpatterns = [
-    path('v1/', include(router_v1.urls)),
-    path('v1/auth/', include('djoser.urls')),
-    path('v1/', include('djoser.urls.jwt')),
+    path('v1/', include(v1_urls)),
 ]

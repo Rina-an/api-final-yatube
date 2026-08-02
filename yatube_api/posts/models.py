@@ -40,6 +40,7 @@ class Post(models.Model):
         verbose_name = "публикация"
         verbose_name_plural = "Публикации"
         default_related_name = 'posts'
+        ordering = ['pub_date']
 
     def __str__(self):
         return self.text[:DEFAULT_TEXT_LENGTH]
@@ -72,17 +73,18 @@ class Comment(models.Model):
 class Follow(models.Model):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
-                             verbose_name="Автор"
+                             verbose_name="Автор",
+                             related_name='follows',
                              )
     following = models.ForeignKey(User,
                                   on_delete=models.CASCADE,
                                   verbose_name="Подписчик",
+                                  related_name='following',
                                   )
 
     class Meta:
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
-        default_related_name = 'followers'
         constraints = [
             models.UniqueConstraint(
                 fields=["user", "following"], name="unique_user_following"
